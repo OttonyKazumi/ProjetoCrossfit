@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.pom.pcrossfit.projetocrossfit.dao.RoleDAO;
-import com.pom.pcrossfit.projetocrossfit.dao.UsuarioDAO;
+import com.pom.pcrossfit.projetocrossfit.dao.IRoleDAO;
+import com.pom.pcrossfit.projetocrossfit.dao.IUsuarioDAO;
 import com.pom.pcrossfit.projetocrossfit.entity.Role;
 import com.pom.pcrossfit.projetocrossfit.entity.Usuario;
 import com.pom.pcrossfit.projetocrossfit.entity.WebUser;
@@ -20,14 +20,14 @@ import com.pom.pcrossfit.projetocrossfit.entity.WebUser;
 @Service
 public class UsuarioServico implements IUsuarioServico{
 
-    private UsuarioDAO usuarioDAO;
+    private IUsuarioDAO usuarioDAO;
 
-	private RoleDAO roleDAO;
+	private IRoleDAO roleDAO;
 
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UsuarioServico(UsuarioDAO usuarioDAO, RoleDAO roleDAO, BCryptPasswordEncoder passwordEncoder) {
+	public UsuarioServico(IUsuarioDAO usuarioDAO, IRoleDAO roleDAO, BCryptPasswordEncoder passwordEncoder) {
 		this.usuarioDAO = usuarioDAO;
 		this.roleDAO = roleDAO;
 		this.passwordEncoder = passwordEncoder;
@@ -35,7 +35,7 @@ public class UsuarioServico implements IUsuarioServico{
 
 	@Override
 	public Usuario findByUserName(String userName) {
-		// check the database if the user already exists
+		// check the database if the user exists
 		return usuarioDAO.findByUserName(userName);
 	}
 
@@ -52,7 +52,7 @@ public class UsuarioServico implements IUsuarioServico{
 		usuario.setEnabled(true);
 
 		// give user default role of "employee"
-		usuario.setRoles(Arrays.asList(roleDAO.findRoleByName("ROLE_EMPLOYEE")));
+		usuario.setRoles(Arrays.asList(roleDAO.findRoleByName("ROLE_CLIENTE")));
 
 		// save user in the database
 		usuarioDAO.save(usuario);

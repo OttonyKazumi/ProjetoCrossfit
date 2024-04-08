@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.pom.pcrossfit.projetocrossfit.service.UsuarioServico;
+import com.pom.pcrossfit.projetocrossfit.service.IUsuarioServico;
 
 @Configuration
 public class UsuarioSecurityConfig {
@@ -20,7 +20,7 @@ public class UsuarioSecurityConfig {
 
     //authenticationProvider bean definition
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(UsuarioServico usuarioServico) {
+    public DaoAuthenticationProvider authenticationProvider(IUsuarioServico usuarioServico) {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(usuarioServico); //set the custom user details service
         auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt

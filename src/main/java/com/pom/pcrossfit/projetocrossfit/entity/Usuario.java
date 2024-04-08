@@ -37,6 +37,9 @@ public class Usuario {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @Column(name = "historico")
+    private String historico;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
@@ -44,12 +47,13 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nome, String sobreNome, String email, String endereco, String telefone, Collection<Role> role, Boolean enabled) {
+    public Usuario(String nome, String sobreNome, String email, String endereco, String telefone, String historico, Collection<Role> role, Boolean enabled) {
         this.nome = nome;
         this.sobreNome = sobreNome;
         this.email = email;
         this.endereco = endereco;
         this.telefone = telefone;
+        this.historico = historico;
         this.roles = role;
         this.enabled = enabled;
     }
@@ -100,6 +104,14 @@ public class Usuario {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getHistorico() {
+        return this.historico;
+    }
+
+    public void setHistorico(String historico) {
+        this.historico = historico;
     }
 
     public Collection<Role> getRoles() {
